@@ -13,8 +13,7 @@ export const sendToken = (res, user, statusCode, message) => {
     name: user.name,
     phone: phone.email,
     // avatar: user.avatar,
-    preference:user.preference,
-    post: user.post,
+    preference:user.preference
   };
 
   res

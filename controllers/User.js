@@ -25,6 +25,7 @@ export const register = async (req, res) => {
     user = await User.create({
       name,
       phone,
+      preference,
       // avatar: {
       //   public_id: mycloud.public_id,
       //   url: mycloud.secure_url,
@@ -33,13 +34,13 @@ export const register = async (req, res) => {
       // otp_expiry: new Date(Date.now() + process.env.OTP_EXPIRE * 60 * 1000),
     });
 
-    //await sendMail(email, "Verify your account", `Your OTP is ${otp}`);
+    //await sendMail(phone, "Verify your account", `Your OTP is ${otp}`);
 
     sendToken(
       res,
       user,
       201,
-      //"OTP sent to your email, please verify your account"
+      //"OTP sent to your phone, please verify your account"
     );
     }
   } catch (error) {
@@ -73,20 +74,20 @@ export const register = async (req, res) => {
 
 // export const login = async (req, res) => {
 //   try {
-//     const { email, password } = req.body;
+//     const { phone, password } = req.body;
 
-//     if (!email || !password) {
+//     if (!phone || !password) {
 //       return res
 //         .status(400)
 //         .json({ success: false, message: "Please enter all fields" });
 //     }
 
-//     const user = await User.findOne({ email }).select("+password");
+//     const user = await User.findOne({ phone }).select("+password");
 
 //     if (!user) {
 //       return res
 //         .status(400)
-//         .json({ success: false, message: "Invalid Email or Password" });
+//         .json({ success: false, message: "Invalid phone or Password" });
 //     }
 
 //     const isMatch = await user.comparePassword(password);
@@ -94,7 +95,7 @@ export const register = async (req, res) => {
 //     if (!isMatch) {
 //       return res
 //         .status(400)
-//         .json({ success: false, message: "Invalid Email or Password" });
+//         .json({ success: false, message: "Invalid phone or Password" });
 //     }
 
 //     sendToken(res, user, 200, "Login Successful");
@@ -279,12 +280,12 @@ export const updatePassword = async (req, res) => {
 
 export const forgetPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { phone } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ phone });
 
     if (!user) {
-      return res.status(400).json({ success: false, message: "Invalid Email" });
+      return res.status(400).json({ success: false, message: "Invalid phone" });
     }
 
     const otp = Math.floor(Math.random() * 1000000);
@@ -294,11 +295,11 @@ export const forgetPassword = async (req, res) => {
 
     await user.save();
 
-    const message = `Your OTP for reseting the password ${otp}. If you did not request for this, please ignore this email.`;
+    const message = `Your OTP for reseting the password ${otp}. If you did not request for this, please ignore this phone.`;
 
-    await sendMail(email, "Request for Reseting Password", message);
+    await sendMail(phone, "Request for Reseting Password", message);
 
-    res.status(200).json({ success: true, message: `OTP sent to ${email}` });
+    res.status(200).json({ success: true, message: `OTP sent to ${phone}` });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
