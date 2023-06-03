@@ -6,7 +6,7 @@ import fs from "fs";
 
 export const register = async (req, res) => {
   try {
-    const { name, phone } = req.body;
+    const { name, phone, preference } = req.body;
 
     //const avatar = req.files.avatar.tempFilePath;
 

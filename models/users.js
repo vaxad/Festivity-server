@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
 
+  preference: {
+    type: String,
+    required:true,
+    default: "ALL",
+  },
+
   // avatar: {
   //   public_id: String,
   //   url: String,
@@ -26,11 +32,7 @@ const userSchema = new mongoose.Schema({
   
   //post:{type:mongoose.Schema.Types.ObjectId, ref:"Post"},
 
-  preference: {
-    type: String,
-    required:true,
-    default: "ALL",
-  },
+  
 });
 
 const postSchema = new mongoose.Schema({
