@@ -154,6 +154,19 @@ export const removePost = async (req, res) => {
   }
 };
 
+export const getOnePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    //const user = await User.findById(req.user._id);
+     const post= await Post.findById(postId)
+    res
+      .status(200)
+      .json({ success: true, message: "Post found successfully",post:post });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const getPost = async (req, res) => {
   try {
 

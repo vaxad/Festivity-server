@@ -11,6 +11,7 @@ import {
   updateProfile,
   getPost,
   getAllPosts,
+  getOnePost,
   getUser,
   postReview,
 } from "../controllers/User.js";
@@ -40,7 +41,8 @@ router
 
 router
   .route("/post/:postId")
-  .delete(isAuthenticated, removePost);
+  .delete(isAuthenticated, removePost)
+  .get(isAuthenticated, getOnePost);
 
 router.route("/updateprofile").put(isAuthenticated, updateProfile);
 // router.route("/updatepassword").put(isAuthenticated, updatePassword);
