@@ -11,7 +11,7 @@ export const sendToken = (res, user, statusCode, message) => {
   const userData = {
     _id: user._id,
     name: user.name,
-    phone: phone.email,
+    phone: user.phone,
     // avatar: user.avatar,
     preference:user.preference
   };
