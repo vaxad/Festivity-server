@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 // import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
+  
   name: {
     type: String,
     required: true,
@@ -14,23 +15,18 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
 
-  preference: {
+  preferences: [{
     type: String,
     required:true,
     default: "ALL",
-  },
+  }],
 
-  // avatar: {
-  //   public_id: String,
-  //   url: String,
-  // },
 
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  
-  //post:{type:mongoose.Schema.Types.ObjectId, ref:"Post"},
+
 
   
 });
