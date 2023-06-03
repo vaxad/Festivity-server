@@ -14,10 +14,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
 
-  avatar: {
-    public_id: String,
-    url: String,
-  },
+  // avatar: {
+  //   public_id: String,
+  //   url: String,
+  // },
 
   createdAt: {
     type: Date,
@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
 
   preference: {
     type: String,
+    required:true,
     default: "ALL",
   },
 });
