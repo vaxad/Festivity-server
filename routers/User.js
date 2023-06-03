@@ -11,6 +11,7 @@ import {
   updateProfile,
   getPost,
   getAllPosts,
+  getUser,
 } from "../controllers/User.js";
 import { isAuthenticated } from "../middleware/auth.js";
 
@@ -27,6 +28,10 @@ router.route("/newpost").post(isAuthenticated, addPost);
 router.route("/me").get(isAuthenticated, getMyProfile);
 router.route("/getpost").get(isAuthenticated, getPost)
 router.route("/getallpost").get(isAuthenticated, getAllPosts)
+
+router
+  .route("/user/:userId")
+  .get(isAuthenticated, getUser);
 
 router
   .route("/post/:postId")

@@ -51,7 +51,21 @@ const postSchema = new mongoose.Schema({
       type:Number,
       default:0
     },
-    createdAt: { type: Date, expires: '2m', default: Date.now }
+    createdAt: { type: Date, default: Date.now }
+})
+
+const reviewSchema = new mongoose.Schema({
+  about:"String",
+  by:"String",
+    description:{
+      type:"String",
+      required: true
+    },
+    likes:{
+      type:Number,
+      default:0
+    },
+    createdAt: { type: Date, default: Date.now }
 })
 
 // userSchema.pre("save", async function (next) {
@@ -76,3 +90,4 @@ userSchema.methods.getJWTToken = function () {
 
 export const User = mongoose.model("User", userSchema);
 export const Post = mongoose.model("Post", postSchema);
+export const Review = mongoose.model("Review", reviewSchema);
