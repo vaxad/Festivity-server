@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  email: {
+  phone: {
     type: String,
     required: true,
     unique: true,
@@ -26,15 +26,10 @@ const userSchema = new mongoose.Schema({
   
   //post:{type:mongoose.Schema.Types.ObjectId, ref:"Post"},
 
-  verified: {
-    type: Boolean,
-    default: false,
+  preference: {
+    type: String,
+    default: "ALL",
   },
-
-  otp: Number,
-  otp_expiry: Date,
-  resetPasswordOtp: Number,
-  resetPasswordOtpExpiry: Date,
 });
 
 const postSchema = new mongoose.Schema({
@@ -47,6 +42,12 @@ const postSchema = new mongoose.Schema({
       type:"String",
       required: true
     },
+    venue:{
+      type:"String"
+    },
+    date:{
+      type:Date
+    },
     likes:{
       type:Number,
       default:0
@@ -55,8 +56,17 @@ const postSchema = new mongoose.Schema({
 })
 
 const reviewSchema = new mongoose.Schema({
-  about:"String",
-  by:"String",
+  about:{
+    type:"String"
+  },
+  by:{
+    type:"String"
+  },
+    stars:{
+      type:Number,
+      required:true,
+      default:0
+    },
     description:{
       type:"String",
       required: true

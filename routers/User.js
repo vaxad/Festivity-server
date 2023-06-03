@@ -12,6 +12,7 @@ import {
   getPost,
   getAllPosts,
   getUser,
+  postReview,
 } from "../controllers/User.js";
 import { isAuthenticated } from "../middleware/auth.js";
 
@@ -33,11 +34,15 @@ router
   .route("/user/:userId")
   .get(isAuthenticated, getUser);
 
+  router
+  .route("/review/:userId")
+  .post(isAuthenticated, postReview)
+
 router
   .route("/post/:postId")
   .delete(isAuthenticated, removePost);
 
-// router.route("/updateprofile").put(isAuthenticated, updateProfile);
+router.route("/updateprofile").put(isAuthenticated, updateProfile);
 // router.route("/updatepassword").put(isAuthenticated, updatePassword);
 
 // router.route("/forgetpassword").post(forgetPassword);

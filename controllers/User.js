@@ -1,4 +1,4 @@
-import { User, Post } from "../models/users.js";
+import { User, Post, Review } from "../models/users.js";
 import { sendMail } from "../utils/sendMail.js";
 import { sendToken } from "../utils/sendToken.js";
 import cloudinary from "cloudinary";
@@ -6,11 +6,11 @@ import fs from "fs";
 
 export const register = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, phone } = req.body;
 
     //const avatar = req.files.avatar.tempFilePath;
 
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ phone });
 
     if (user) {
       sendToken(res, user, 200, "Login Successful");
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
 
     user = await User.create({
       name,
-      email,
+      phone,
       // avatar: {
       //   public_id: mycloud.public_id,
       //   url: mycloud.secure_url,
@@ -118,7 +118,7 @@ export const logout = async (req, res) => {
 
 export const addPost = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, venue, date } = req.body;
 
     const user = await User.findById(req.user._id);
     const creator=user._id;
@@ -128,6 +128,8 @@ export const addPost = async (req, res) => {
         creator,
         title,
         description,
+        venue,
+        date,
         createdAt: new Date(Date.now()),
       }
     )
@@ -201,26 +203,37 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const postReview = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { stars, description } = req.body;
+
+    const user = await User.findById(req.user._id);
+    const creator=user._id;
+    
+    const review = await Review.create(
+      {
+        by:creator,
+        about:userId,
+        stars:stars,
+        description:description,
+        createdAt: new Date(Date.now()),
+      }
+    )
+
+    res.status(200).json({ success: true, message: "Review added successfully", review:review });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
-    const { name } = req.body;
-    const avatar = req.files.avatar.tempFilePath;
+    const { preference } = req.body;
 
-    if (name) user.name = name;
-    if (avatar) {
-      await cloudinary.v2.uploader.destroy(user.avatar.public_id);
-
-      const mycloud = await cloudinary.v2.uploader.upload(avatar);
-
-      fs.rmSync("./tmp", { recursive: true });
-
-      user.avatar = {
-        public_id: mycloud.public_id,
-        url: mycloud.secure_url,
-      };
-    }
+    if (preference) user.preference = preference;
 
     await user.save();
 
