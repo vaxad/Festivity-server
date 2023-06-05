@@ -3,7 +3,10 @@ import { User } from "../models/users.js";
 
 export const isAuthenticated = async (req, res, next) => {
   try {
-    const { token } = req.cookies;
+    var { token } = req.cookies;
+    if(!token){
+      token=req.header('token');
+    }
 
     if (!token) {
       return res.status(401).json({ success: false, message: "Login First" });
