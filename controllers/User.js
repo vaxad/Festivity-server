@@ -241,6 +241,22 @@ export const postReview = async (req, res) => {
   }
 };
 
+export const getUserReview = async (req, res) => {
+  try {
+
+    const { userId } = req.params;
+    //const user = await User.findById(req.user._id);
+
+    const reviews=await Review.find({about:userId})
+
+    res
+      .status(200)
+      .json({ success: true, reviews:reviews });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

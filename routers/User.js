@@ -14,6 +14,7 @@ import {
   getOnePost,
   getUser,
   postReview,
+  getUserReview,
 } from "../controllers/User.js";
 import { isAuthenticated } from "../middleware/auth.js";
 
@@ -38,6 +39,7 @@ router
   router
   .route("/review/:userId")
   .post(isAuthenticated, postReview)
+  .get(isAuthenticated,getUserReview)
 
 router
   .route("/post/:postId")
