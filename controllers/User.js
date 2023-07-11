@@ -211,7 +211,7 @@ export const getUser = async (req, res) => {
     const { userId } = req.params;
     const user = await User.findById(userId);
 
-    sendToken(res, user, 201);
+    res.status(200).json({user:user})
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
